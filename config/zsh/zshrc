@@ -1,0 +1,54 @@
+# -------------------------------------- added by cesar --------------------------------------
+
+# git autocomplete
+autoload -Uz compinit && compinit
+
+# add to get branch from git
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+zstyle ':vcs_info:git:*' formats ' (%b)'
+setopt PROMPT_SUBST
+export PS1='(zsh) %B%F{cyan}%n@%m% :%F{yellow}%~%f%F{red}${vcs_info_msg_0_}%f%b $ '
+
+# autojump
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+
+### stuff for macOS computers
+
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+
+code () {
+    open $1 -a "Visual Studio Code"
+}
+
+# autocompletion for git commands
+[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] \
+    && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+
+alias rebash='echo "Resourcing zsh";source ~/.zshrc'
+
+# show all files, in long format, with sizes in more modern units 
+alias ll="ls -alhF"
+
+alias bat="/usr/bin/batcat"
+
+
+# autojump for mac
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+
+
+## add some quick command shortcuts
+# for vscode, install `code` command like this <https://code.visualstudio.com/docs/setup/mac#_launch-vs-code-from-the-command-line>
+
+chrome () {
+    open $1 -a "Google Chrome"
+}
+
+subl () {
+    open $1 -a "Sublime Text (4107)"
+}
+
+# -------------------------------------- end cesar --------------------------------------
+

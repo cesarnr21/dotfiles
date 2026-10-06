@@ -1,0 +1,55 @@
+{
+    "security.workspace.trust.enabled": false,
+    "update.mode": "manual",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Dark Modern",
+    "workbench.colorCustomizations": {
+        "editor.background": "#0b0f14",
+        "sideBar.background": "#0b0f14",
+        "activityBar.background": "#0b0f14",
+        "terminal.background": "#0b0f14"
+    },
+    "editor.renderWhitespace": "all",
+    "editor.semanticHighlighting.enabled": true,
+    "docker.extension.enableComposeLanguageServer": false,
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.enableEditableInstalls": false,
+    "remote.SSH.useLocalServer": false,
+    "remote.SSH.remotePlatform": {
+        "gaia": "linux",
+        "nyx": "linux",
+        "venus": "linux",
+        "juno": "linux",
+        "hebe": "linux",
+        "pi": "linux",
+        "orin": "linux"
+    },
+    "files.associations": {
+        "*.pod.j2": "ini",
+        "*.container.j2": "ini",
+        "*.volume.j2": "ini",
+        "*.network.j2": "ini",
+        "*.pod": "ini",
+        "*.container": "ini",
+        "*.volume": "ini",
+        "*.network": "ini"
+    },
+    "todo-tree.ripgrep.ripgrep": "/usr/bin/rg"
+}

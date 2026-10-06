@@ -1,0 +1,9 @@
+// settings for sublime
+{
+	"added_words":
+	[
+		"handheld"
+	],
+	"font_size": 12,
+	"spell_check": true
+}

@@ -1,0 +1,6 @@
+# Managed by pyinfra (deploys/dns.py) - local edits will be overwritten.
+[Resolve]
+DNS={{ dns_server }}
+{% if dns_domains %}
+Domains={{ dns_domains }}
+{% endif %}
