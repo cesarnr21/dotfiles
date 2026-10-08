@@ -1,0 +1,71 @@
+[project]
+    name = "dotfilesrc"
+    dynamic = ["version", "readme"]
+    requires-python = ">=3.10"
+
+    dependencies = [
+        "rich",
+        "requests",
+        "pyinfra>=3.0"
+    ]
+
+    description = "Some tools to help manage my computer sytems"
+    authors = [
+        {name = "Cesar Nunez Rodriguez", email = "cesarnr21@gmail.com" }
+    ]
+
+# set up packaging
+[build-system]
+    requires = ["setuptools"]
+    build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+    packages = ["dotfilesrc"]
+
+[tool.setuptools.dynamic]
+    version = {attr = "dotfilesrc.__version__"}  # required
+    readme = {file = ["README.md"], content-type = "text/plain"}
+
+[project.optional-dependencies]
+    dev = [
+        "isort",
+        "codespell",
+        "pre-commit",
+        "pylint"
+    ]
+
+    test = [
+        "pytest",
+        "coverage",
+        "pytest-cov"
+    ]
+
+[tool.coverage.run]
+    branch= true
+    source = ["dotfilesrc/"]
+    command_line = "-m pytest -rA --doctest-modules --junitxml=pytest.xml"
+
+[tool.pylint]
+    [tool.pylint.MAIN]
+    load-pluggins = [
+        "pylint.extensions.typing",
+        "pylint.extensions.docparams",
+    ]
+    exit-zero = true
+    max-line-length = 150
+
+    [tool.pylint.messages_control]
+    disable = [
+        "loggin-not-lazy",
+        "missing-module-docstring",
+        "import-error",
+        "unspecified-encoding",
+    ]
+
+    [tool.pylint.REPORTS]
+    # omit from the similarity reports
+    ignore-comments = 'yes'
+    ignore-docstring = 'yes'
+    ignore-imports = 'yes'
+    ignore-signature = 'yes'
+    min-similarity-lines = 4
