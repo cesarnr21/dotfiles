@@ -37,27 +37,42 @@ alias bat="/usr/bin/batcat"
 . /usr/share/autojump/autojump.sh
 
 
-## Set up SSH Agent
+# -------------------------------------- set up ssh agent --------------------------------------
 SSH_ENV="$HOME/.ssh/environment"
 
-function start_agent {
-     echo "Initialising new SSH agent..."
-     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-     echo succeeded
-     chmod 600 "${SSH_ENV}"
-     . "${SSH_ENV}" > /dev/null
-     /usr/bin/ssh-add;
+## only if set if SSH keys exist
+
+# if you use non-default names (e.g. ~/.ssh/github_key),
+# add them to the for list. Also change ssh-add to ssh-add ~/.ssh/github_key,
+# since a bare ssh-add only loads the default names
+ssh_keys_exist() {
+    local key
+    for key in id_rsa id_ecdsa id_ecdsa_sk id_ed25519 id_ed25519_sk id_dsa; do
+        [ -f "$HOME/.ssh/$key" ] && return 0
+    done
+    return 1
 }
 
-# Source SSH settings, if applicable
-if [ -f "${SSH_ENV}" ]; then
-     . "${SSH_ENV}" > /dev/null
-     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-         start_agent;
-     }
-else
-     start_agent;
+start_agent() {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add
+}
+
+if ssh_keys_exist; then
+    # Source SSH settings, if applicable
+    if [ -f "${SSH_ENV}" ]; then
+        . "${SSH_ENV}" > /dev/null
+        ps -ef | grep "${SSH_AGENT_PID}" | grep 'ssh-agent$' > /dev/null || start_agent
+    else
+        start_agent
+    fi
 fi
+
+
 
 # -------------------------------------- end by cesar --------------------------------------
 

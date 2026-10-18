@@ -15,6 +15,16 @@ set -gx DOCKER_BUILDKIT 1
 # -----------------------setup SSH Agent ------------------------
 set SSH_ENV $HOME/.ssh/agent-environment
 
+# Custom key names: if you use non-default names (e.g. ~/.ssh/github_key),
+# add them to the for list. Also change ssh-add to ssh-add ~/.ssh/github_key,
+# since a bare ssh-add only loads the default names
+function ssh_keys_exist
+    for key in id_rsa id_ecdsa id_ecdsa_sk id_ed25519 id_ed25519_sk id_dsa
+        test -f $HOME/.ssh/$key; and return 0
+    end
+    return 1
+end
+
 function start_agent
     echo "Initialising new SSH agent..."
     ssh-agent -c | sed 's/^echo/#echo/' >$SSH_ENV
@@ -24,14 +34,16 @@ function start_agent
     ssh-add
 end
 
-# Source SSH settings, if applicable
-if test -e $SSH_ENV
-    . $SSH_ENV >/dev/null
-    ps -ef | grep $SSH_AGENT_PID | grep ssh-agent >/dev/null || start_agent
-else
-    start_agent
+# Only set up the agent if SSH keys exist
+if ssh_keys_exist
+    # Source SSH settings, if applicable
+    if test -e $SSH_ENV
+        . $SSH_ENV >/dev/null
+        ps -ef | grep $SSH_AGENT_PID | grep ssh-agent >/dev/null || start_agent
+    else
+        start_agent
+    end
 end
-
 
 
 # ----------------------- set prompt color ------------------------
