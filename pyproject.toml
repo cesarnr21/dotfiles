@@ -6,7 +6,8 @@
     dependencies = [
         "rich",
         "requests",
-        "pyinfra>=3.0"
+        "pyinfra>=3.0",
+        "art"
     ]
 
     description = "Some tools to help manage my computer sytems"

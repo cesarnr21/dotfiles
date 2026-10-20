@@ -22,6 +22,7 @@ def docker():
         service="docker",
         running=True,
         enabled=True,
+        _sudo=True,
     )
 
     server.group(

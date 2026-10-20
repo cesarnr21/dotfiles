@@ -32,12 +32,14 @@ class DebugFormatter(logging.Formatter):
 
 
 
-def setup_logging(debug: bool = False):
-    root_logger = logging.getLogger()
-    formatter = DebugFormatter(debug)
-    handler = logging.StreamHandler()
-    handler.setFormatter(formatter)
-    root_logger.addHandler(handler)
+def setup_logging(handlers: list[logging.Handler], debug: bool = False):
+    if len(handlers) > 0:
+        root_logger = logging.getLogger()
+        formatter = DebugFormatter(debug)
 
-    root_logger.setLevel(logging.DEBUG) if debug else root_logger.setLevel(logging.INFO)
-    logger.info(f"setup logging, mode {logging.getLevelName(logger.getEffectiveLevel())}")
+        for i in handlers:
+            i.setFormatter(formatter)
+            root_logger.addHandler(i)
+
+        root_logger.setLevel(logging.DEBUG) if debug else root_logger.setLevel(logging.INFO)
+        logger.info(f"setup logging, mode {logging.getLevelName(logger.getEffectiveLevel())}")

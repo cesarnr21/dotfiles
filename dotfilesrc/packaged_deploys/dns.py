@@ -30,6 +30,7 @@ def dns():
         mode="644",
         dns_server=host.data.dns_server,
         dns_domains=host.data.dns_domains,
+        _sudo=True,
     )
 
     resolv_conf_link = files.link(
@@ -37,6 +38,7 @@ def dns():
         path="/etc/resolv.conf",
         target="/run/systemd/resolve/resolv.conf",
         force=True,
+        _sudo=True,
     )
 
     if resolved_conf.changed or resolv_conf_link.changed:
@@ -44,4 +46,5 @@ def dns():
             name="Restart systemd-resolved",
             service="systemd-resolved",
             restarted=True,
+            _sudo=True,
         )

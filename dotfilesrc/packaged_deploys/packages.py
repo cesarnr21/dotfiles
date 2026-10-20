@@ -29,15 +29,17 @@ def packages():
         )
 
     elif is_fedora_family(host):
-        dnf.update(name="Upgrade all packages (dnf update -y)")
+        dnf.update(name="Upgrade all packages (dnf update -y)",_sudo=True)
 
         major = host.get_fact(LinuxDistribution)["major"]
         dnf.rpm(
             name="Enable RPM Fusion (free) so ffmpeg is the full build",
             src=RPMFUSION_FREE_URL_TEMPLATE.format(major=major),
+            _sudo=True
         )
 
         dnf.packages(
             name="Install core packages",
             packages=core_packages(host),
+            _sudo=True
         )
