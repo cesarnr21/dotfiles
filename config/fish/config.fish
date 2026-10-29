@@ -81,6 +81,11 @@ function fish_prompt
     echo -n ' ❯ '
 end
 
+# disable command not found prompt
+function fish_command_not_found
+    __fish_default_command_not_found_handler $argv
+end
+
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib /usr/local/lib
 fish_add_path $HOME/.local/bin /usr/local/bin
 fish_add_path /var/lib/flatpak/exports/bin
